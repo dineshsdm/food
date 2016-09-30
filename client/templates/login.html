@@ -1,0 +1,17 @@
+<ion-view title="Sign in">
+  <ion-content class="login">
+    <form name="loginForm" validation-schema schema="Register" ng-submit="login.userLogin(loginForm, data)"> 
+      <div class="list">
+        <label class="item item-input">
+          <input name="email" ng-model="data.email" type="text" placeholder="Email">
+        </label>
+        <label class="item item-input">
+          <input name="password" type="password" ng-model="data.password" placeholder="Password">
+        </label>  
+        <div class="padding">
+          <button class="button button-block button-positive">Sign in</button>
+        </div>
+      </div>  
+    </form>
+  </ion-content>
+</ion-view>
