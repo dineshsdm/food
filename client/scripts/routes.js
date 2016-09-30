@@ -43,17 +43,44 @@ class RoutesConfig extends Config {
       .state('welcome', {
         url: '/welcome',
         templateUrl: 'client/templates/welcome.html',
-        controller: 'HomeCtrl as home'
+        controller: 'HomeCtrl as home',
+        resolve: {
+          currentUser($q) {
+            if (Meteor.userId()) {
+              return $q.reject('CANT_ACCESS');
+            } else {
+              return $q.resolve();
+            }
+          }
+        }
       })
       .state('login', {
         url: '/login',
         templateUrl: 'client/templates/login.html',
-        controller: 'LoginCtrl as login'
+        controller: 'LoginCtrl as login',
+        resolve: {
+          currentUser($q) {
+            if (Meteor.userId()) {
+              return $q.reject('CANT_ACCESS');
+            } else {
+              return $q.resolve();
+            }
+          }
+        }
       })
       .state('signup', {
         url: '/signup',
         templateUrl: 'client/templates/register.html',
-        controller: 'SignupCtrl as signup'
+        controller: 'SignupCtrl as signup',
+        resolve: {
+          currentUser($q) {
+            if (Meteor.userId()) {
+              return $q.reject('CANT_ACCESS');
+            } else {
+              return $q.resolve();
+            }
+          }
+        }
       })
       .state('suggestion', {
         url: '/suggestion',
@@ -98,7 +125,9 @@ class RoutesRunner extends Runner {
       const err = _.last(args);
 
       if (err === 'AUTH_REQUIRED') {
-        this.$state.go('welcome');
+        this.$state.go('login');
+      }else if(err === 'CANT_ACCESS'){
+        this.$state.go('suggestion');
       }
     });
   }
